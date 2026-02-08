@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💝</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        
+        const Heart = ({ className, style }) => (
+            <svg className={className} style={style} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        );
+        
+        const X = ({ size = 24 }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        );
+
+        const ValentineProposal = () => {
+            const [stage, setStage] = useState('proposal');
+            const [noCount, setNoCount] = useState(0);
+            const [selectedDay, setSelectedDay] = useState(null);
+            const [showEnvelope, setShowEnvelope] = useState(false);
+            const [noButtonSize, setNoButtonSize] = useState(1);
+            const [yesButtonSize, setYesButtonSize] = useState(1);
+
+            const noMessages = [
+                "Are you sure? 🥺",
+                "Please? 🙏",
+                "Pretty please? 💕",
+                "I'll buy you ice cream? 🍦",
+                "Come on, don't break my heart! 💔",
+                "I promise to be the best valentine ever! ✨",
+                "Think about all the cuddles! 🤗",
+                "But... but... I already planned everything! 😭"
+            ];
+
+            const valentineWeek = [
+                { date: '2026-02-07', name: 'Rose Day', emoji: '🌹' },
+                { date: '2026-02-08', name: 'Propose Day', emoji: '💍' },
+                { date: '2026-02-09', name: 'Chocolate Day', emoji: '🍫' },
+                { date: '2026-02-10', name: 'Teddy Day', emoji: '🧸' },
+                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝' },
+                { date: '2026-02-12', name: 'Hug Day', emoji: '🤗' },
+                { date: '2026-02-13', name: 'Kiss Day', emoji: '💋' },
+                { date: '2026-02-14', name: "Valentine's Day", emoji: '❤️' }
+            ];
+
+            const handleNo = () => {
+                setNoCount(prev => prev + 1);
+                setNoButtonSize(prev => Math.max(0.3, prev - 0.15));
+                setYesButtonSize(prev => prev + 0.2);
+            };
+
+            const handleYes = () => {
+                setStage('accepted');
+                setTimeout(() => setStage('calendar'), 3000);
+            };
+
+            const openDay = (day) => {
+                const today = new Date().toISOString().split('T')[0];
+                const dayDate = day.date;
+                
+                if (dayDate <= today) {
+                    setSelectedDay(day);
+                    setShowEnvelope(true);
+                }
+            };
+
+            const getDayContent = (day) => {
+                if (day.name === 'Rose Day') {
+                    return (
+                        <div className="text-center space-y-4">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-4">Happy Rose Day! 🌹</h2>
+                            <div className="relative inline-block">
+                                <div className="text-9xl animate-pulse">🌹</div>
+                                <div className="absolute inset-0 animate-ping opacity-20 text-9xl">🌹</div>
+                            </div>
+                            <p className="text-lg text-gray-700 italic mt-6">
+                                "A rose speaks of love silently, in a language known only to the heart."
+                            </p>
+                            <p className="text-gray-600 mt-4">
+                                This beautiful rose is for you, my Valentine. 
+                                Just like its petals unfold, my love for you grows more beautiful each day. 💕
+                            </p>
+                        </div>
+                    );
+                } else if (day.name === "Valentine's Day") {
+                    return (
+                        <div className="text-center space-y-4">
+                            <h2 className="text-3xl font-bold text-red-600 mb-4">Valentine's Day Special! ❤️</h2>
+                            <div className="text-6xl mb-4">🏨</div>
+                            <div className="bg-white p-6 rounded-lg shadow-md text-left">
+                                <h3 className="text-xl font-semibold mb-3">Our Reservation</h3>
+                                <p className="text-gray-700"><strong>Hotel:</strong> [Hotel Name]</p>
+                                <p className="text-gray-700"><strong>Time:</strong> [Reservation Time]</p>
+                                <p className="text-gray-700"><strong>Special:</strong> Romantic dinner for two</p>
+                            </div>
+                            <p className="text-gray-600 mt-4 italic">
+                                Can't wait to celebrate this special day with you! 💑
+                            </p>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <div className="text-center space-y-4">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-4">Happy {day.name}! {day.emoji}</h2>
+                            <div className="text-9xl">{day.emoji}</div>
+                            <p className="text-gray-600 mt-4">
+                                This day's special message will be revealed soon... 💝
+                            </p>
+                        </div>
+                    );
+                }
+            };
+
+            if (stage === 'proposal') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-red-50 to-purple-100 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-md w-full text-center relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-full opacity-10">
+                                {[...Array(20)].map((_, i) => (
+                                    <Heart
+                                        key={i}
+                                        className="absolute animate-pulse"
+                                        style={{
+                                            top: `${Math.random() * 100}%`,
+                                            left: `${Math.random() * 100}%`,
+                                            fontSize: `${Math.random() * 30 + 10}px`,
+                                            animationDelay: `${Math.random() * 2}s`
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                            
+                            <div className="relative z-10">
+                                <div className="text-8xl mb-6 animate-bounce">💝</div>
+                                <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                                    Will you be my Valentine?
+                                </h1>
+                                <p className="text-gray-600 mb-8">
+                                    I have something special planned for you... 💕
+                                </p>
+                                
+                                {noCount > 0 && (
+                                    <div className="mb-6 p-4 bg-pink-50 rounded-lg animate-pulse">
+                                        <p className="text-pink-600 font-semibold">
+                                            {noMessages[Math.min(noCount - 1, noMessages.length - 1)]}
+                                        </p>
+                                    </div>
+                                )}
+                                
+                                <div className="flex gap-4 justify-center items-center">
+                                    <button
+                                        onClick={handleYes}
+                                        style={{ transform: `scale(${yesButtonSize})` }}
+                                        className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-full font-bold text-xl hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                                    >
+                                        Yes! 💕
+                                    </button>
+                                    <button
+                                        onClick={handleNo}
+                                        style={{ transform: `scale(${noButtonSize})` }}
+                                        className="bg-gray-300 text-gray-700 px-8 py-4 rounded-full font-bold text-xl hover:scale-95 transition-all duration-300"
+                                    >
+                                        No 😢
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (stage === 'accepted') {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-red-50 to-purple-100 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-3xl shadow-2xl p-12 max-w-2xl w-full text-center">
+                            <div className="text-9xl mb-6 animate-bounce">🎉</div>
+                            <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500 mb-6">
+                                Congratulations!
+                            </h1>
+                            <p className="text-2xl text-gray-700 mb-4">
+                                You've made me the happiest man in the world! 🥰
+                            </p>
+                            <div className="flex justify-center gap-2 text-6xl animate-pulse">
+                                💕 ❤️ 💖 💗 💓
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-pink-100 via-red-50 to-purple-100 p-4 md:p-8">
+                    <div className="max-w-6xl mx-auto">
+                        <h1 className="text-4xl md:text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-red-500 mb-4">
+                            Our Valentine's Week 💝
+                        </h1>
+                        <p className="text-center text-gray-600 mb-8">
+                            Click on each day to reveal your special surprise! 🎁
+                        </p>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            {valentineWeek.map((day, index) => {
+                                const today = new Date().toISOString().split('T')[0];
+                                const isUnlocked = day.date <= today;
+                                
+                                return (
+                                    <div
+                                        key={index}
+                                        onClick={() => isUnlocked && openDay(day)}
+                                        className={`relative bg-white rounded-2xl p-6 text-center transition-all duration-300 ${
+                                            isUnlocked
+                                                ? 'cursor-pointer hover:scale-105 hover:shadow-2xl shadow-lg'
+                                                : 'opacity-50 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        {!isUnlocked && (
+                                            <div className="absolute top-2 right-2 text-2xl">🔒</div>
+                                        )}
+                                        <div className="text-6xl mb-4">{day.emoji}</div>
+                                        <h3 className="font-bold text-xl text-gray-800 mb-2">{day.name}</h3>
+                                        <p className="text-sm text-gray-500">
+                                            {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                        </p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {showEnvelope && selectedDay && (
+                            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                                <div className="bg-gradient-to-br from-pink-50 to-red-50 rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl">
+                                    <button
+                                        onClick={() => {
+                                            setShowEnvelope(false);
+                                            setSelectedDay(null);
+                                        }}
+                                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                                    >
+                                        <X size={32} />
+                                    </button>
+                                    
+                                    <div className="text-center mb-6">
+                                        <div className="text-8xl mb-4 animate-bounce">✉️</div>
+                                    </div>
+                                    
+                                    {getDayContent(selectedDay)}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<ValentineProposal />, document.getElementById('root'));
+    </script>
+</body>
+</html>
