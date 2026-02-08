@@ -70,7 +70,8 @@
             };
 
             const openDay = (day) => {
-                const today = new Date().toISOString().split('T')[0];
+                const todayDate = new Date();
+                const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
                 const dayDate = day.date;
                 
                 if (dayDate <= today) {
@@ -215,7 +216,8 @@
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                             {valentineWeek.map((day, index) => {
-                                const today = new Date().toISOString().split('T')[0];
+                                const todayDate = new Date();
+                                const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
                                 const isUnlocked = day.date <= today;
                                 
                                 return (
