@@ -234,7 +234,7 @@
                                         <div className="text-6xl mb-4">{day.emoji}</div>
                                         <h3 className="font-bold text-xl text-gray-800 mb-2">{day.name}</h3>
                                         <p className="text-sm text-gray-500">
-                                            {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                            Feb {parseInt(day.date.split('-')[2])}
                                         </p>
                                     </div>
                                 );
