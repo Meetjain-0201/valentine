@@ -156,7 +156,7 @@
                 { date: '2026-02-08', name: 'Propose Day', emoji: '💍' },
                 { date: '2026-02-09', name: 'Chocolate Day', emoji: '🍫' },
                 { date: '2026-02-10', name: 'Teddy Day', emoji: '🧸' },
-                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝', locked: true },  // Keep locked
+                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝' },
                 { date: '2026-02-12', name: 'Hug Day', emoji: '🤗' },
                 { date: '2026-02-13', name: 'Kiss Day', emoji: '💋' },
                 { date: '2026-02-14', name: "Valentine's Day", emoji: '❤️' }
@@ -177,9 +177,6 @@
                 const todayDate = new Date();
                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
                 const dayDate = day.date;
-                
-                // Don't open if manually locked
-                if (day.locked) return;
                 
                 if (dayDate <= today) {
                     setSelectedDay(day);
@@ -592,11 +589,11 @@
                                         ⚡ Thunder Buddies For Life! ⚡
                                     </h3>
                                     <p className="text-gray-700 text-lg mb-3 text-center">
-                                        "You're my best friend, Aheen. And no matter how much life tries to pull us apart, 
+                                        "You're my best friend, Johnny. And no matter how much life tries to pull us apart, 
                                         we're always gonna be Thunder Buddies."
                                     </p>
                                     <p className="text-gray-600 text-base mb-4 italic text-center">
-                                        - Ted
+                                        - Ted (probably, when he's being wholesome)
                                     </p>
                                     <div className="border-t-2 border-pink-300 pt-4">
                                         <p className="text-gray-700 text-center">
@@ -790,7 +787,7 @@
                             {valentineWeek.map((day, index) => {
                                 const todayDate = new Date();
                                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
-                                const isUnlocked = day.date <= today && !day.locked;
+                                const isUnlocked = day.date <= today;
                                 
                                 return (
                                     <div
