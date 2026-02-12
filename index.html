@@ -362,21 +362,13 @@
                     const PromisePlayer = () => {
                         const [isPlaying, setIsPlaying] = React.useState(false);
                         const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(0);
-                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-                        const audioRef = React.useRef(null);
-                        
-                } else if (day.name === 'Promise Day') {
-                    const PromisePlayer = () => {
-                        const [isPlaying, setIsPlaying] = React.useState(false);
-                        const [currentTime, setCurrentTime] = React.useState(0);
                         const [duration, setDuration] = React.useState(258); // Default 4:18 for Photograph
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
                         // Images - cover first, then your photos
                         const images = [
-                            'photograph-cover.jpg',  // If you don't have this, it will skip to photo1
+                            'photograph-cover.jpg',
                             'photo1.jpeg',
                             'photo2.jpeg',
                             'photo3.jpeg',
