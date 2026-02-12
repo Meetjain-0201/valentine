@@ -360,11 +360,11 @@
                     );
                 } else if (day.name === 'Teddy Day') {
                     return (
-                        <div className="relative min-h-[600px] overflow-hidden">
+                        <div className="relative overflow-hidden pb-20">
                             <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Teddy Day! 🧸</h2>
                             
                             {/* Video Section */}
-                            <div className="max-w-3xl mx-auto mb-4">
+                            <div className="max-w-3xl mx-auto mb-12">
                                 <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                     <video 
                                         className="w-full"
@@ -379,25 +379,15 @@
                                 </div>
                             </div>
                             
-                            {/* Animated Ted Bear */}
-                            <div className="relative min-h-[400px]">
-                                {/* Ted looking at viewer and moving */}
-                                <div 
-                                    className="absolute text-9xl transition-all duration-1000 ease-in-out ted-bear"
-                                    style={{
-                                        left: '10%',
-                                        top: '20px'
-                                    }}
-                                >
-                                    🧸
-                                </div>
-                                
+                            {/* Animated Ted Bear Section */}
+                            <div className="relative min-h-[500px]">
                                 {/* Speech bubble that appears above Ted's head */}
                                 <div 
-                                    className="absolute bg-white rounded-2xl p-4 shadow-lg max-w-sm ted-speech z-10"
+                                    className="ted-speech absolute bg-white rounded-2xl p-4 shadow-lg max-w-sm z-20"
                                     style={{
-                                        left: '10%',
-                                        top: '-120px'
+                                        left: '50%',
+                                        transform: 'translateX(-50%)',
+                                        bottom: '180px'
                                     }}
                                 >
                                     <p className="text-gray-800 font-medium text-sm">
@@ -405,23 +395,34 @@
                                         When you hear the sound of thunder, don't you get too scared. 
                                         Just grab your Thunder Buddy and say these magic words..." 🌩️
                                     </p>
-                                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
+                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2">
                                         <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white"></div>
                                     </div>
                                 </div>
                                 
+                                {/* Ted looking at viewer and moving */}
+                                <div 
+                                    className="ted-bear absolute text-9xl transition-all duration-1000 ease-in-out"
+                                    style={{
+                                        bottom: '50px',
+                                        left: '10%'
+                                    }}
+                                >
+                                    🧸
+                                </div>
+                                
                                 {/* Ted's message */}
-                                <div className="text-center mt-48">
+                                <div className="text-center mt-96 pt-32">
                                     <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl max-w-2xl mx-auto">
                                         <h3 className="text-2xl font-bold text-gray-800 mb-4">
                                             ⚡ Thunder Buddies For Life! ⚡
                                         </h3>
-                                        <p className="text-gray-700 text-lg mb-3 italic">
-                                            "Fuck you, Thunder! You can suck my dick! 
-                                            You can't get me, Thunder, 'cause you're just God's farts!"
+                                        <p className="text-gray-700 text-lg mb-3">
+                                            "You're my best friend, Aheen. And no matter how much life tries to pull us apart, 
+                                            we're always gonna be Thunder Buddies."
                                         </p>
-                                        <p className="text-gray-600 text-base mb-4">
-                                            - The Official Thunder Buddies Song
+                                        <p className="text-gray-600 text-base mb-4 italic">
+                                            - Ted (probably, when he's being wholesome)
                                         </p>
                                         <div className="border-t-2 border-pink-300 pt-4">
                                             <p className="text-gray-700">
@@ -450,21 +451,21 @@
                                         transform: rotate(-5deg) scale(1);
                                     }
                                     15% { 
-                                        left: 40%; 
-                                        transform: rotate(3deg) scale(1.05);
+                                        left: 45%; 
+                                        transform: rotate(0deg) scale(1.05);
                                     }
                                     /* Stop and show message */
                                     30%, 55% { 
-                                        left: 40%; 
+                                        left: 45%; 
                                         transform: rotate(0deg) scale(1);
                                     }
                                     /* Resume moving */
                                     70% { 
-                                        left: 70%; 
+                                        left: 75%; 
                                         transform: rotate(5deg) scale(1.1);
                                     }
                                     85% { 
-                                        left: 30%; 
+                                        left: 25%; 
                                         transform: rotate(-3deg) scale(0.95);
                                     }
                                     100% { 
@@ -476,20 +477,17 @@
                                 @keyframes speechAppear {
                                     0%, 25% { 
                                         opacity: 0; 
-                                        left: 10%;
-                                        transform: translateY(-20px) scale(0.8);
+                                        transform: translateX(-50%) translateY(-20px) scale(0.8);
                                     }
                                     /* Appear when Ted stops */
                                     30%, 55% { 
                                         opacity: 1;
-                                        left: 40%;
-                                        transform: translateY(0) scale(1);
+                                        transform: translateX(-50%) translateY(0) scale(1);
                                     }
                                     /* Disappear when Ted moves again */
                                     60%, 100% { 
                                         opacity: 0;
-                                        left: 40%;
-                                        transform: translateY(-20px) scale(0.8);
+                                        transform: translateX(-50%) translateY(-20px) scale(0.8);
                                     }
                                 }
                             `}</style>
