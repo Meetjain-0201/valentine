@@ -366,7 +366,6 @@
                             {/* Video Section */}
                             <div className="max-w-3xl mx-auto mb-8">
                                 <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-                                    {/* Replace 'your-video-file.mp4' with your actual Ted video file */}
                                     <video 
                                         className="w-full"
                                         autoPlay 
@@ -375,13 +374,9 @@
                                         playsInline
                                     >
                                         <source src="ted-clip-1.mp4" type="video/mp4" />
-                                        {/* Add more video sources if you have multiple clips */}
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
-                                <p className="text-center text-sm text-gray-500 mt-2">
-                                    (Upload your Ted movie clips as: ted-clip-1.mp4, ted-clip-2.mp4, etc. in the same folder as index.html)
-                                </p>
                             </div>
                             
                             {/* Animated Ted Bear */}
@@ -409,40 +404,35 @@
                                     }}
                                 >
                                     <p className="text-gray-800 font-medium">
-                                        "Yo! I'm Ted, and I'm here to tell you that you've got yourself a keeper. 
-                                        Don't mess this up!" 😏
+                                        "Hey! You scared of the dark? Me too! Wanna be Thunder Buddies? 
+                                        When you hear the sound of thunder, don't you get too scared. 
+                                        Just grab your Thunder Buddy and say these magic words..." 🌩️
                                     </p>
                                     <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
                                         <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white"></div>
                                     </div>
                                 </div>
                                 
-                                {/* Kiss animation */}
-                                <div 
-                                    className="absolute text-6xl"
-                                    style={{
-                                        animation: 'kissFloat 10s ease-in-out infinite 5s',
-                                        right: '20%',
-                                        top: '50%'
-                                    }}
-                                >
-                                    💋
-                                </div>
-                                
                                 {/* Ted's message */}
                                 <div className="text-center mt-64 pt-32">
                                     <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl max-w-2xl mx-auto">
-                                        <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                                            Ted's Official Seal of Approval 🧸✓
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                                            ⚡ Thunder Buddies For Life! ⚡
                                         </h3>
-                                        <p className="text-gray-700 text-lg mb-3">
-                                            "Listen, I've seen a lotta relationships in my time. Thunder buddies, 
-                                            best friends, all that shit. But you two? You're the real deal."
+                                        <p className="text-gray-700 text-lg mb-3 italic">
+                                            "Fuck you, Thunder! You can suck my dick! 
+                                            You can't get me, Thunder, 'cause you're just God's farts!"
                                         </p>
-                                        <p className="text-gray-600 italic">
-                                            "Now quit being a pussy and keep treating her right! Also, I left you 
-                                            a real teddy bear because I'm a thoughtful son of a bitch." 😎
+                                        <p className="text-gray-600 text-base mb-4">
+                                            - The Official Thunder Buddies Song
                                         </p>
+                                        <div className="border-t-2 border-pink-300 pt-4">
+                                            <p className="text-gray-700">
+                                                So yeah, you got yourself a real teddy bear from your man. 
+                                                I'm just here to remind you that whether it's thunder, scary movies, 
+                                                or spiders in the bathroom... you two got each other. 🧸💕
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -480,17 +470,6 @@
                                     70% { 
                                         opacity: 0; 
                                         transform: translateX(-50%) translateY(20px);
-                                    }
-                                }
-                                
-                                @keyframes kissFloat {
-                                    0%, 40%, 100% { 
-                                        opacity: 0; 
-                                        transform: scale(0) rotate(0deg);
-                                    }
-                                    50%, 90% { 
-                                        opacity: 1; 
-                                        transform: scale(1.5) rotate(360deg);
                                     }
                                 }
                             `}</style>
