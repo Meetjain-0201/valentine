@@ -232,6 +232,47 @@
                             </div>
                         </div>
                     );
+                } else if (day.name === 'Propose Day') {
+                    return (
+                        <div className="text-center space-y-6">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-6">Happy Propose Day! 💍</h2>
+                            
+                            {/* Newspaper Display */}
+                            <div className="max-w-3xl mx-auto">
+                                <div className="relative bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-lg shadow-2xl">
+                                    {/* Newspaper Image */}
+                                    <div className="relative">
+                                        <img 
+                                            src="propose-day-newspaper.jpg" 
+                                            alt="Breaking News - Proposal" 
+                                            className="w-full h-auto rounded shadow-lg"
+                                            style={{
+                                                filter: 'sepia(0.1) contrast(1.05)',
+                                                boxShadow: '0 10px 40px rgba(0,0,0,0.3)'
+                                            }}
+                                        />
+                                        {/* Newspaper fold effect */}
+                                        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                                            <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-gray-400 to-transparent opacity-20"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Sweet Message Below */}
+                            <div className="max-w-2xl mx-auto mt-8 px-4">
+                                <div className="bg-white rounded-xl p-6 shadow-lg">
+                                    <p className="text-gray-800 text-lg leading-relaxed mb-4">
+                                        February 6th, 2026 - the day I asked you to be mine, and you said YES! 💕
+                                    </p>
+                                    <p className="text-gray-600">
+                                        Every day with you feels like breaking news. You're the headline of my life story, 
+                                        and I'm so grateful you're choosing to write it with me. 📰❤️
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    );
                 } else if (day.name === 'Chocolate Day') {
                     return (
                         <div className="max-w-3xl mx-auto p-4">
