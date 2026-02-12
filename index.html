@@ -364,7 +364,7 @@
                             <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Teddy Day! 🧸</h2>
                             
                             {/* Video Section */}
-                            <div className="max-w-3xl mx-auto mb-12">
+                            <div className="max-w-3xl mx-auto mb-8">
                                 <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                     <video 
                                         className="w-full"
@@ -379,58 +379,54 @@
                                 </div>
                             </div>
                             
-                            {/* Animated Ted Bear Section */}
-                            <div className="relative min-h-[500px]">
-                                {/* Speech bubble that appears above Ted's head */}
-                                <div 
-                                    className="ted-speech absolute bg-white rounded-2xl p-4 shadow-lg max-w-sm z-20"
-                                    style={{
-                                        left: '50%',
-                                        transform: 'translateX(-50%)',
-                                        bottom: '180px'
-                                    }}
-                                >
-                                    <p className="text-gray-800 font-medium text-sm">
+                            {/* First Static Message */}
+                            <div className="max-w-2xl mx-auto mb-8 px-4">
+                                <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
+                                    <p className="text-gray-800 font-medium">
                                         "Hey! You scared of the dark? Me too! Wanna be Thunder Buddies? 
                                         When you hear the sound of thunder, don't you get too scared. 
                                         Just grab your Thunder Buddy and say these magic words..." 🌩️
                                     </p>
+                                </div>
+                            </div>
+                            
+                            {/* Animated Ted Bear Section */}
+                            <div className="relative min-h-[300px] mb-8">
+                                {/* Speech bubble that appears above Ted's head */}
+                                <div className="ted-speech absolute bg-pink-100 rounded-2xl p-3 shadow-lg max-w-xs z-20 border-2 border-pink-300">
+                                    <p className="text-gray-800 font-semibold text-sm text-center">
+                                        *winks at you* 😏
+                                    </p>
                                     <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-                                        <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white"></div>
+                                        <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-pink-300"></div>
                                     </div>
                                 </div>
                                 
-                                {/* Ted looking at viewer and moving */}
-                                <div 
-                                    className="ted-bear absolute text-9xl transition-all duration-1000 ease-in-out"
-                                    style={{
-                                        bottom: '50px',
-                                        left: '10%'
-                                    }}
-                                >
+                                {/* Ted moving around */}
+                                <div className="ted-bear absolute text-9xl transition-all duration-1000 ease-in-out">
                                     🧸
                                 </div>
-                                
-                                {/* Ted's message */}
-                                <div className="text-center mt-96 pt-32">
-                                    <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl max-w-2xl mx-auto">
-                                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                                            ⚡ Thunder Buddies For Life! ⚡
-                                        </h3>
-                                        <p className="text-gray-700 text-lg mb-3">
-                                            "You're my best friend, Aheen. And no matter how much life tries to pull us apart, 
-                                            we're always gonna be Thunder Buddies."
+                            </div>
+                            
+                            {/* Final Thunder Buddies Message */}
+                            <div className="max-w-2xl mx-auto mt-12 px-4">
+                                <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl shadow-lg">
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+                                        ⚡ Thunder Buddies For Life! ⚡
+                                    </h3>
+                                    <p className="text-gray-700 text-lg mb-3 text-center">
+                                        "You're my best friend, Johnny. And no matter how much life tries to pull us apart, 
+                                        we're always gonna be Thunder Buddies."
+                                    </p>
+                                    <p className="text-gray-600 text-base mb-4 italic text-center">
+                                        - Ted (probably, when he's being wholesome)
+                                    </p>
+                                    <div className="border-t-2 border-pink-300 pt-4">
+                                        <p className="text-gray-700 text-center">
+                                            So yeah, you got yourself a real teddy bear from your man. 
+                                            I'm just here to remind you that whether it's thunder, scary movies, 
+                                            or spiders in the bathroom... you two got each other. 🧸💕
                                         </p>
-                                        <p className="text-gray-600 text-base mb-4 italic">
-                                            - Ted (probably, when he's being wholesome)
-                                        </p>
-                                        <div className="border-t-2 border-pink-300 pt-4">
-                                            <p className="text-gray-700">
-                                                So yeah, you got yourself a real teddy bear from your man. 
-                                                I'm just here to remind you that whether it's thunder, scary movies, 
-                                                or spiders in the bathroom... you two got each other. 🧸💕
-                                            </p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -439,10 +435,14 @@
                             <style>{`
                                 .ted-bear {
                                     animation: tedMove 15s ease-in-out infinite;
+                                    bottom: 100px;
                                 }
                                 
                                 .ted-speech {
                                     animation: speechAppear 15s ease-in-out infinite;
+                                    bottom: 250px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
                                 }
                                 
                                 @keyframes tedMove {
@@ -479,7 +479,7 @@
                                         opacity: 0; 
                                         transform: translateX(-50%) translateY(-20px) scale(0.8);
                                     }
-                                    /* Appear when Ted stops */
+                                    /* Appear when Ted stops at center */
                                     30%, 55% { 
                                         opacity: 1;
                                         transform: translateX(-50%) translateY(0) scale(1);
