@@ -156,7 +156,7 @@
                 { date: '2026-02-08', name: 'Propose Day', emoji: '💍' },
                 { date: '2026-02-09', name: 'Chocolate Day', emoji: '🍫' },
                 { date: '2026-02-10', name: 'Teddy Day', emoji: '🧸' },
-                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝' },
+                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝', locked: true },  // Keep locked
                 { date: '2026-02-12', name: 'Hug Day', emoji: '🤗' },
                 { date: '2026-02-13', name: 'Kiss Day', emoji: '💋' },
                 { date: '2026-02-14', name: "Valentine's Day", emoji: '❤️' }
@@ -177,6 +177,9 @@
                 const todayDate = new Date();
                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
                 const dayDate = day.date;
+                
+                // Don't open if manually locked
+                if (day.locked) return;
                 
                 if (dayDate <= today) {
                     setSelectedDay(day);
@@ -366,10 +369,10 @@
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
-                        // Replace these with your actual image files
+                        // Images array
                         const images = [
-                            'photograph-cover.jpg',  // Original song cover
-                            'photo1.jpg',  // Your photos
+                            'photograph-cover.jpg',  // Show only at start
+                            'photo1.jpg',
                             'photo2.jpg',
                             'photo3.jpg',
                             'photo4.jpg',
@@ -392,23 +395,40 @@
                             };
                         }, []);
                         
+                        // Slideshow effect
                         React.useEffect(() => {
-                            if (isPlaying && duration > 0) {
-                                const interval = duration / images.length;
-                                const imageInterval = setInterval(() => {
-                                    setCurrentImageIndex(prev => (prev + 1) % images.length);
-                                }, interval * 1000);
+                            if (!isPlaying || duration === 0) return;
+                            
+                            // Show cover for 5 seconds, then cycle through photos every 10 seconds
+                            const coverDuration = 5000; // 5 seconds for cover
+                            const photoDuration = 10000; // 10 seconds per photo
+                            
+                            // Start with cover (index 0)
+                            const timeout = setTimeout(() => {
+                                setCurrentImageIndex(1); // Move to first photo
                                 
-                                return () => clearInterval(imageInterval);
-                            }
+                                // Then cycle through photos 1-5
+                                const interval = setInterval(() => {
+                                    setCurrentImageIndex(prev => {
+                                        if (prev >= 5) return 1; // Loop back to photo1 (index 1)
+                                        return prev + 1;
+                                    });
+                                }, photoDuration);
+                                
+                                return () => clearInterval(interval);
+                            }, coverDuration);
+                            
+                            return () => clearTimeout(timeout);
                         }, [isPlaying, duration]);
                         
                         const togglePlay = () => {
                             const audio = audioRef.current;
                             if (isPlaying) {
                                 audio.pause();
+                                setCurrentImageIndex(0); // Reset to cover when paused
                             } else {
                                 audio.play();
+                                setCurrentImageIndex(0); // Start with cover when playing
                             }
                             setIsPlaying(!isPlaying);
                         };
@@ -423,6 +443,7 @@
                         };
                         
                         const formatTime = (time) => {
+                            if (isNaN(time)) return '0:00';
                             const mins = Math.floor(time / 60);
                             const secs = Math.floor(time % 60);
                             return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -440,27 +461,23 @@
                                             <img
                                                 key={index}
                                                 src={img}
-                                                alt={`Memory ${index + 1}`}
+                                                alt={index === 0 ? 'Photograph Cover' : `Memory ${index}`}
                                                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
                                                 style={{
                                                     opacity: currentImageIndex === index ? 1 : 0
                                                 }}
                                                 onError={(e) => {
-                                                    e.target.style.display = 'none';
+                                                    e.target.parentElement.querySelector('.fallback')?.classList.remove('hidden');
                                                 }}
                                             />
                                         ))}
                                         
                                         {/* Fallback if images don't load */}
-                                        <div 
-                                            className="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center"
-                                            style={{
-                                                opacity: images.every((_, i) => i !== currentImageIndex) ? 1 : 0
-                                            }}
-                                        >
+                                        <div className="fallback hidden absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
                                             <div className="text-white text-center">
                                                 <div className="text-9xl mb-4">📸</div>
                                                 <p className="text-xl">Our Memories</p>
+                                                <p className="text-sm mt-2">Add your photos to see them here!</p>
                                             </div>
                                         </div>
                                     </div>
@@ -478,7 +495,7 @@
                                             >
                                                 <div 
                                                     className="h-full bg-white rounded-full transition-all group-hover:bg-green-500"
-                                                    style={{ width: `${(currentTime / duration) * 100}%` }}
+                                                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
                                                 ></div>
                                             </div>
                                             <div className="flex justify-between text-xs text-gray-400 mt-2">
@@ -491,7 +508,7 @@
                                         <div className="flex items-center justify-center gap-6">
                                             <button 
                                                 onClick={togglePlay}
-                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
                                             >
                                                 {isPlaying ? (
                                                     <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
@@ -510,20 +527,12 @@
                                     </div>
                                 </div>
                                 
-                                {/* Instructions */}
-                                <div className="mt-6 bg-pink-50 p-4 rounded-lg text-center">
-                                    <p className="text-sm text-gray-700">
-                                        <strong>To complete this:</strong> Add "photograph.mp3" and your photos (photo1.jpg, photo2.jpg, etc.) 
-                                        in the same folder as index.html
-                                    </p>
-                                </div>
-                                
                                 {/* Message */}
-                                <div className="mt-6 text-center">
-                                    <p className="text-gray-700 text-lg">
+                                <div className="mt-6 text-center px-4">
+                                    <p className="text-gray-700 text-lg mb-2">
                                         "We keep this love in a photograph, we made these memories for ourselves."
                                     </p>
-                                    <p className="text-gray-600 mt-2">
+                                    <p className="text-gray-600">
                                         Every moment with you is worth capturing. 📸💕
                                     </p>
                                 </div>
@@ -589,11 +598,11 @@
                                         ⚡ Thunder Buddies For Life! ⚡
                                     </h3>
                                     <p className="text-gray-700 text-lg mb-3 text-center">
-                                        "You're my best friend, Johnny. And no matter how much life tries to pull us apart, 
+                                        "You're my best friend, Aheen. And no matter how much life tries to pull us apart, 
                                         we're always gonna be Thunder Buddies."
                                     </p>
                                     <p className="text-gray-600 text-base mb-4 italic text-center">
-                                        - Ted (probably, when he's being wholesome)
+                                        - Ted
                                     </p>
                                     <div className="border-t-2 border-pink-300 pt-4">
                                         <p className="text-gray-700 text-center">
@@ -787,7 +796,7 @@
                             {valentineWeek.map((day, index) => {
                                 const todayDate = new Date();
                                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
-                                const isUnlocked = day.date <= today;
+                                const isUnlocked = day.date <= today && !day.locked;
                                 
                                 return (
                                     <div
