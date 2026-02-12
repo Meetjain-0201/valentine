@@ -364,7 +364,7 @@
                             <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Teddy Day! 🧸</h2>
                             
                             {/* Video Section */}
-                            <div className="max-w-3xl mx-auto mb-8">
+                            <div className="max-w-3xl mx-auto mb-4">
                                 <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                     <video 
                                         className="w-full"
@@ -380,30 +380,27 @@
                             </div>
                             
                             {/* Animated Ted Bear */}
-                            <div className="relative">
+                            <div className="relative min-h-[400px]">
                                 {/* Ted looking at viewer and moving */}
                                 <div 
-                                    className="absolute text-9xl transition-all duration-1000 ease-in-out"
+                                    className="absolute text-9xl transition-all duration-1000 ease-in-out ted-bear"
                                     style={{
-                                        animation: 'tedMove 10s ease-in-out infinite',
                                         left: '10%',
-                                        top: '0'
+                                        top: '20px'
                                     }}
                                 >
                                     🧸
                                 </div>
                                 
-                                {/* Speech bubbles that appear */}
+                                {/* Speech bubble that appears above Ted's head */}
                                 <div 
-                                    className="absolute bg-white rounded-2xl p-4 shadow-lg max-w-xs"
+                                    className="absolute bg-white rounded-2xl p-4 shadow-lg max-w-sm ted-speech z-10"
                                     style={{
-                                        animation: 'fadeInOut 10s ease-in-out infinite',
-                                        left: '50%',
-                                        top: '20%',
-                                        transform: 'translateX(-50%)'
+                                        left: '10%',
+                                        top: '-120px'
                                     }}
                                 >
-                                    <p className="text-gray-800 font-medium">
+                                    <p className="text-gray-800 font-medium text-sm">
                                         "Hey! You scared of the dark? Me too! Wanna be Thunder Buddies? 
                                         When you hear the sound of thunder, don't you get too scared. 
                                         Just grab your Thunder Buddy and say these magic words..." 🌩️
@@ -414,7 +411,7 @@
                                 </div>
                                 
                                 {/* Ted's message */}
-                                <div className="text-center mt-64 pt-32">
+                                <div className="text-center mt-48">
                                     <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl max-w-2xl mx-auto">
                                         <h3 className="text-2xl font-bold text-gray-800 mb-4">
                                             ⚡ Thunder Buddies For Life! ⚡
@@ -439,37 +436,60 @@
                             
                             {/* Styles for Ted animations */}
                             <style>{`
+                                .ted-bear {
+                                    animation: tedMove 15s ease-in-out infinite;
+                                }
+                                
+                                .ted-speech {
+                                    animation: speechAppear 15s ease-in-out infinite;
+                                }
+                                
                                 @keyframes tedMove {
-                                    0%, 100% { 
+                                    0% { 
                                         left: 10%; 
                                         transform: rotate(-5deg) scale(1);
                                     }
-                                    25% { 
+                                    15% { 
+                                        left: 40%; 
+                                        transform: rotate(3deg) scale(1.05);
+                                    }
+                                    /* Stop and show message */
+                                    30%, 55% { 
+                                        left: 40%; 
+                                        transform: rotate(0deg) scale(1);
+                                    }
+                                    /* Resume moving */
+                                    70% { 
                                         left: 70%; 
                                         transform: rotate(5deg) scale(1.1);
                                     }
-                                    50% { 
+                                    85% { 
                                         left: 30%; 
-                                        transform: rotate(-3deg) scale(0.9);
+                                        transform: rotate(-3deg) scale(0.95);
                                     }
-                                    75% { 
-                                        left: 80%; 
-                                        transform: rotate(8deg) scale(1.05);
+                                    100% { 
+                                        left: 10%; 
+                                        transform: rotate(-5deg) scale(1);
                                     }
                                 }
                                 
-                                @keyframes fadeInOut {
-                                    0%, 30%, 100% { 
+                                @keyframes speechAppear {
+                                    0%, 25% { 
                                         opacity: 0; 
-                                        transform: translateX(-50%) translateY(-20px);
+                                        left: 10%;
+                                        transform: translateY(-20px) scale(0.8);
                                     }
-                                    35%, 65% { 
-                                        opacity: 1; 
-                                        transform: translateX(-50%) translateY(0);
+                                    /* Appear when Ted stops */
+                                    30%, 55% { 
+                                        opacity: 1;
+                                        left: 40%;
+                                        transform: translateY(0) scale(1);
                                     }
-                                    70% { 
-                                        opacity: 0; 
-                                        transform: translateX(-50%) translateY(20px);
+                                    /* Disappear when Ted moves again */
+                                    60%, 100% { 
+                                        opacity: 0;
+                                        left: 40%;
+                                        transform: translateY(-20px) scale(0.8);
                                     }
                                 }
                             `}</style>
