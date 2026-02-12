@@ -156,7 +156,7 @@
                 { date: '2026-02-08', name: 'Propose Day', emoji: '💍' },
                 { date: '2026-02-09', name: 'Chocolate Day', emoji: '🍫' },
                 { date: '2026-02-10', name: 'Teddy Day', emoji: '🧸' },
-                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝', locked: true },  // Keep locked
+                { date: '2026-02-11', name: 'Promise Day', emoji: '🤝' },
                 { date: '2026-02-12', name: 'Hug Day', emoji: '🤗' },
                 { date: '2026-02-13', name: 'Kiss Day', emoji: '💋' },
                 { date: '2026-02-14', name: "Valentine's Day", emoji: '❤️' }
@@ -177,9 +177,6 @@
                 const todayDate = new Date();
                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
                 const dayDate = day.date;
-                
-                // Don't open if manually locked
-                if (day.locked) return;
                 
                 if (dayDate <= today) {
                     setSelectedDay(day);
@@ -796,7 +793,7 @@
                             {valentineWeek.map((day, index) => {
                                 const todayDate = new Date();
                                 const today = `${todayDate.getFullYear()}-${String(todayDate.getMonth() + 1).padStart(2, '0')}-${String(todayDate.getDate()).padStart(2, '0')}`;
-                                const isUnlocked = day.date <= today && !day.locked;
+                                const isUnlocked = day.date <= today;
                                 
                                 return (
                                     <div
