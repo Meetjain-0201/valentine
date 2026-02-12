@@ -366,9 +366,17 @@
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
-                        // Images array
+                } else if (day.name === 'Promise Day') {
+                    const PromisePlayer = () => {
+                        const [isPlaying, setIsPlaying] = React.useState(false);
+                        const [currentTime, setCurrentTime] = React.useState(0);
+                        const [duration, setDuration] = React.useState(258); // Default 4:18 for Photograph
+                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+                        const audioRef = React.useRef(null);
+                        
+                        // Images - cover first, then your photos
                         const images = [
-                            'photograph-cover.jpg',  // Show only at start
+                            'photograph-cover.jpg',  // If you don't have this, it will skip to photo1
                             'photo1.jpeg',
                             'photo2.jpeg',
                             'photo3.jpeg',
@@ -392,46 +400,44 @@
                             };
                         }, []);
                         
-                        // Slideshow effect
+                        // Slideshow: Cover for 5s, then photos 1-5 cycling every 10s
                         React.useEffect(() => {
-                            if (!isPlaying || duration === 0) return;
+                            if (!isPlaying) return;
                             
-                            // Show cover for 5 seconds, then cycle through photos every 10 seconds
-                            const coverDuration = 5000; // 5 seconds for cover
-                            const photoDuration = 10000; // 10 seconds per photo
+                            setCurrentImageIndex(0); // Start with cover
                             
-                            // Start with cover (index 0)
-                            const timeout = setTimeout(() => {
-                                setCurrentImageIndex(1); // Move to first photo
+                            // After 5 seconds, move to first photo
+                            const coverTimeout = setTimeout(() => {
+                                setCurrentImageIndex(1);
                                 
-                                // Then cycle through photos 1-5
-                                const interval = setInterval(() => {
+                                // Then cycle photos 1-5 every 10 seconds
+                                const photoInterval = setInterval(() => {
                                     setCurrentImageIndex(prev => {
-                                        if (prev >= 5) return 1; // Loop back to photo1 (index 1)
+                                        if (prev >= 5) return 1; // After photo5, back to photo1
                                         return prev + 1;
                                     });
-                                }, photoDuration);
+                                }, 10000);
                                 
-                                return () => clearInterval(interval);
-                            }, coverDuration);
+                                return () => clearInterval(photoInterval);
+                            }, 5000);
                             
-                            return () => clearTimeout(timeout);
-                        }, [isPlaying, duration]);
+                            return () => clearTimeout(coverTimeout);
+                        }, [isPlaying]);
                         
                         const togglePlay = () => {
                             const audio = audioRef.current;
                             if (isPlaying) {
-                                audio.pause();
-                                setCurrentImageIndex(0); // Reset to cover when paused
+                                audio?.pause();
+                                setCurrentImageIndex(0);
                             } else {
-                                audio.play();
-                                setCurrentImageIndex(0); // Start with cover when playing
+                                audio?.play();
                             }
                             setIsPlaying(!isPlaying);
                         };
                         
                         const handleProgressClick = (e) => {
                             const audio = audioRef.current;
+                            if (!audio) return;
                             const progressBar = e.currentTarget;
                             const clickX = e.clientX - progressBar.getBoundingClientRect().left;
                             const width = progressBar.offsetWidth;
@@ -440,7 +446,7 @@
                         };
                         
                         const formatTime = (time) => {
-                            if (isNaN(time)) return '0:00';
+                            if (isNaN(time) || !isFinite(time)) return '0:00';
                             const mins = Math.floor(time / 60);
                             const secs = Math.floor(time % 60);
                             return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -458,24 +464,18 @@
                                             <img
                                                 key={index}
                                                 src={img}
-                                                alt={index === 0 ? 'Photograph Cover' : `Memory ${index}`}
+                                                alt={index === 0 ? 'Photograph Cover' : `Our Memory ${index}`}
                                                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
                                                 style={{
-                                                    opacity: currentImageIndex === index ? 1 : 0
-                                                }}
-                                                onError={(e) => {
-                                                    e.target.parentElement.querySelector('.fallback')?.classList.remove('hidden');
+                                                    opacity: currentImageIndex === index ? 1 : 0,
+                                                    zIndex: currentImageIndex === index ? 10 : 1
                                                 }}
                                             />
                                         ))}
                                         
-                                        {/* Fallback if images don't load */}
-                                        <div className="fallback hidden absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
-                                            <div className="text-white text-center">
-                                                <div className="text-9xl mb-4">📸</div>
-                                                <p className="text-xl">Our Memories</p>
-                                                <p className="text-sm mt-2">Add your photos to see them here!</p>
-                                            </div>
+                                        {/* Debug indicator - shows which photo is active */}
+                                        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
+                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex}`}
                                         </div>
                                     </div>
                                     
