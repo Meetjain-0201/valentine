@@ -956,33 +956,338 @@
                     
                     return <KissPlayer />;
                 } else if (day.name === "Valentine's Day") {
-                    return (
-                        <div className="text-center space-y-4">
-                            <h2 className="text-3xl font-bold text-red-600 mb-4">Valentine's Day Special! ❤️</h2>
-                            <div className="text-6xl mb-4">🏨</div>
-                            <div className="bg-white p-6 rounded-lg shadow-md text-left">
-                                <h3 className="text-xl font-semibold mb-3">Our Reservation</h3>
-                                <p className="text-gray-700"><strong>Hotel:</strong> [Hotel Name]</p>
-                                <p className="text-gray-700"><strong>Time:</strong> [Reservation Time]</p>
-                                <p className="text-gray-700"><strong>Special:</strong> Romantic dinner for two</p>
+                    const ValentinePlaylist = () => {
+                        const [currentSongIndex, setCurrentSongIndex] = React.useState(0);
+                        const [isPlaying, setIsPlaying] = React.useState(false);
+                        const [currentTime, setCurrentTime] = React.useState(0);
+                        const [duration, setDuration] = React.useState(0);
+                        const audioRef = React.useRef(null);
+                        
+                        const playlist = [
+                            { 
+                                title: "Just The Way You Are", 
+                                artist: "Bruno Mars", 
+                                file: "just-the-way-you-are.mp3",
+                                cover: "valentine-cover-1.jpg"
+                            },
+                            { 
+                                title: "Perfect", 
+                                artist: "Ed Sheeran", 
+                                file: "perfect.mp3",
+                                cover: "valentine-cover-2.jpg"
+                            },
+                            { 
+                                title: "Adore You", 
+                                artist: "Harry Styles", 
+                                file: "adore-you.mp3",
+                                cover: "valentine-cover-3.jpg"
+                            },
+                            { 
+                                title: "Pretty Baby", 
+                                artist: "Alex Sampson", 
+                                file: "hug-day-song.mp3",
+                                cover: "hug-cover.png"
+                            },
+                            { 
+                                title: "Count On Me", 
+                                artist: "Bruno Mars", 
+                                file: "count-on-me.mp3",
+                                cover: "valentine-cover-4.jpg"
+                            },
+                            { 
+                                title: "Kiss You", 
+                                artist: "One Direction", 
+                                file: "kiss-you.mp3",
+                                cover: "kiss-cover.jpg"
+                            },
+                            { 
+                                title: "They Don't Know About Us", 
+                                artist: "One Direction", 
+                                file: "they-dont-know-about-us.mp3",
+                                cover: "valentine-cover-5.jpg"
+                            },
+                            { 
+                                title: "A.M.", 
+                                artist: "One Direction", 
+                                file: "am-one-direction.mp3",
+                                cover: "valentine-cover-6.jpg"
+                            }
+                        ];
+                        
+                        React.useEffect(() => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            
+                            const updateTime = () => setCurrentTime(audio.currentTime);
+                            const updateDuration = () => setDuration(audio.duration);
+                            const handleEnded = () => {
+                                if (currentSongIndex < playlist.length - 1) {
+                                    setCurrentSongIndex(prev => prev + 1);
+                                } else {
+                                    setIsPlaying(false);
+                                }
+                            };
+                            
+                            audio.addEventListener('timeupdate', updateTime);
+                            audio.addEventListener('loadedmetadata', updateDuration);
+                            audio.addEventListener('ended', handleEnded);
+                            
+                            return () => {
+                                audio.removeEventListener('timeupdate', updateTime);
+                                audio.removeEventListener('loadedmetadata', updateDuration);
+                                audio.removeEventListener('ended', handleEnded);
+                            };
+                        }, [currentSongIndex]);
+                        
+                        React.useEffect(() => {
+                            const audio = audioRef.current;
+                            if (audio && isPlaying) {
+                                audio.play().catch(e => console.log("Playback prevented:", e));
+                            }
+                        }, [currentSongIndex]);
+                        
+                        const togglePlay = () => {
+                            const audio = audioRef.current;
+                            if (isPlaying) {
+                                audio?.pause();
+                            } else {
+                                audio?.play();
+                            }
+                            setIsPlaying(!isPlaying);
+                        };
+                        
+                        const nextSong = () => {
+                            if (currentSongIndex < playlist.length - 1) {
+                                setCurrentSongIndex(prev => prev + 1);
+                                setIsPlaying(true);
+                            }
+                        };
+                        
+                        const prevSong = () => {
+                            if (currentSongIndex > 0) {
+                                setCurrentSongIndex(prev => prev - 1);
+                                setIsPlaying(true);
+                            }
+                        };
+                        
+                        const selectSong = (index) => {
+                            setCurrentSongIndex(index);
+                            setIsPlaying(true);
+                        };
+                        
+                        const handleProgressClick = (e) => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            const progressBar = e.currentTarget;
+                            const clickX = e.clientX - progressBar.getBoundingClientRect().left;
+                            const width = progressBar.offsetWidth;
+                            const newTime = (clickX / width) * duration;
+                            audio.currentTime = newTime;
+                        };
+                        
+                        const formatTime = (time) => {
+                            if (isNaN(time) || !isFinite(time)) return '0:00';
+                            const mins = Math.floor(time / 60);
+                            const secs = Math.floor(time % 60);
+                            return `${mins}:${secs.toString().padStart(2, '0')}`;
+                        };
+                        
+                        const currentSong = playlist[currentSongIndex];
+                        
+                        return (
+                            <div className="max-w-5xl mx-auto space-y-8">
+                                <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 bg-clip-text text-transparent mb-8">
+                                    Happy Valentine's Day! ❤️
+                                </h2>
+                                
+                                {/* Reservation Card */}
+                                <div className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 shadow-2xl border-2 border-red-200">
+                                    <div className="text-center mb-6">
+                                        <div className="text-6xl mb-4">🌹</div>
+                                        <h3 className="text-3xl font-bold text-gray-800 mb-2">Our Valentine's Dinner</h3>
+                                        <div className="w-24 h-1 bg-gradient-to-r from-red-400 to-pink-400 mx-auto rounded-full"></div>
+                                    </div>
+                                    
+                                    <div className="max-w-2xl mx-auto space-y-6">
+                                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                                            <div className="flex items-start gap-4">
+                                                <div className="text-4xl">🍝</div>
+                                                <div className="flex-1">
+                                                    <h4 className="text-2xl font-bold text-gray-800 mb-2">Terramia Ristorante</h4>
+                                                    <p className="text-gray-600 mb-3">Creative Italian cuisine in Boston's charming North End</p>
+                                                    <div className="space-y-2 text-gray-700">
+                                                        <p className="flex items-center gap-2">
+                                                            <span className="text-xl">📍</span>
+                                                            <span>98 Salem Street, Boston, MA 02113</span>
+                                                        </p>
+                                                        <p className="flex items-center gap-2">
+                                                            <span className="text-xl">🕗</span>
+                                                            <span className="font-semibold text-red-600">8:15 PM - Friday, February 14th, 2026</span>
+                                                        </p>
+                                                        <p className="flex items-center gap-2">
+                                                            <span className="text-xl">✨</span>
+                                                            <span>Cozy rustic ambiance with creative Italian classics</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="bg-white rounded-xl p-6 shadow-lg text-center">
+                                            <p className="text-gray-700 text-lg leading-relaxed mb-3">
+                                                Can't wait to celebrate this special day with the most amazing person I know. 
+                                            </p>
+                                            <p className="text-gray-600 italic">
+                                                Intimate Italian dining in the heart of the North End. What more could I ask for? 💕
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {/* Playlist Section */}
+                                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                                    <div className="bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 p-6">
+                                        <h3 className="text-3xl font-bold text-white text-center">Our Valentine's Playlist 🎵</h3>
+                                        <p className="text-white text-center mt-2 opacity-90">Every song reminds me of you</p>
+                                    </div>
+                                    
+                                    <div className="grid md:grid-cols-2 gap-6 p-6">
+                                        {/* Now Playing */}
+                                        <div className="bg-gradient-to-b from-gray-900 to-black rounded-xl overflow-hidden shadow-xl">
+                                            <div className="relative aspect-square bg-gray-800">
+                                                <img
+                                                    src={currentSong.cover}
+                                                    alt={currentSong.title}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <div className="absolute top-4 left-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                                    Now Playing
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="p-6">
+                                                <h4 className="text-white text-2xl font-bold mb-1">{currentSong.title}</h4>
+                                                <p className="text-gray-400 text-lg mb-6">{currentSong.artist}</p>
+                                                
+                                                <div className="mb-6">
+                                                    <div 
+                                                        className="w-full h-2 bg-gray-700 rounded-full cursor-pointer group"
+                                                        onClick={handleProgressClick}
+                                                    >
+                                                        <div 
+                                                            className="h-full bg-gradient-to-r from-red-500 to-pink-500 rounded-full transition-all"
+                                                            style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <div className="flex justify-between text-xs text-gray-400 mt-2">
+                                                        <span>{formatTime(currentTime)}</span>
+                                                        <span>{formatTime(duration)}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div className="flex items-center justify-center gap-4">
+                                                    <button 
+                                                        onClick={prevSong}
+                                                        disabled={currentSongIndex === 0}
+                                                        className="text-white hover:text-pink-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    >
+                                                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                                                        </svg>
+                                                    </button>
+                                                    <button 
+                                                        onClick={togglePlay}
+                                                        className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
+                                                    >
+                                                        {isPlaying ? (
+                                                            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                                            </svg>
+                                                        ) : (
+                                                            <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                                <path d="M8 5v14l11-7z"/>
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                    <button 
+                                                        onClick={nextSong}
+                                                        disabled={currentSongIndex === playlist.length - 1}
+                                                        className="text-white hover:text-pink-400 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    >
+                                                        <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M16 18h2V6h-2zm-11-6l8.5-6v12z"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                
+                                                <audio 
+                                                    ref={audioRef} 
+                                                    src={currentSong.file}
+                                                    onLoadedMetadata={(e) => setDuration(e.target.duration)}
+                                                />
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Playlist Queue */}
+                                        <div className="bg-gray-50 rounded-xl p-6 overflow-y-auto max-h-[600px]">
+                                            <h4 className="text-xl font-bold text-gray-800 mb-4 sticky top-0 bg-gray-50 pb-2">
+                                                Queue ({playlist.length} songs)
+                                            </h4>
+                                            <div className="space-y-2">
+                                                {playlist.map((song, index) => (
+                                                    <div
+                                                        key={index}
+                                                        onClick={() => selectSong(index)}
+                                                        className={`p-4 rounded-lg cursor-pointer transition-all ${
+                                                            index === currentSongIndex
+                                                                ? 'bg-gradient-to-r from-red-100 to-pink-100 border-2 border-red-300 shadow-md'
+                                                                : 'bg-white hover:bg-gray-100 border border-gray-200'
+                                                        }`}
+                                                    >
+                                                        <div className="flex items-center gap-3">
+                                                            <div className={`text-2xl font-bold ${
+                                                                index === currentSongIndex ? 'text-red-500' : 'text-gray-400'
+                                                            }`}>
+                                                                {index + 1}
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className={`font-semibold truncate ${
+                                                                    index === currentSongIndex ? 'text-red-600' : 'text-gray-800'
+                                                                }`}>
+                                                                    {song.title}
+                                                                </div>
+                                                                <div className="text-sm text-gray-600 truncate">{song.artist}</div>
+                                                            </div>
+                                                            {index === currentSongIndex && isPlaying && (
+                                                                <div className="flex gap-1">
+                                                                    <div className="w-1 h-4 bg-red-500 rounded-full animate-pulse"></div>
+                                                                    <div className="w-1 h-4 bg-red-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                                                                    <div className="w-1 h-4 bg-red-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Bottom Message */}
+                                    <div className="bg-gradient-to-r from-red-50 to-pink-50 p-6 text-center border-t-2 border-gray-200">
+                                        <p className="text-gray-700 text-lg mb-2">
+                                            Every song in this playlist reminds me of a moment with you. 🎵💕
+                                        </p>
+                                        <p className="text-gray-600">
+                                            Here's to making more memories together this Valentine's Day and always.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <p className="text-gray-600 mt-4 italic">
-                                Can't wait to celebrate this special day with you! 💑
-                            </p>
-                        </div>
-                    );
-                } else {
-                    return (
-                        <div className="text-center space-y-4">
-                            <h2 className="text-3xl font-bold text-pink-600 mb-4">Happy {day.name}! {day.emoji}</h2>
-                            <div className="text-9xl">{day.emoji}</div>
-                            <p className="text-gray-600 mt-4">
-                                This day's special message will be revealed soon... 💝
-                            </p>
-                        </div>
-                    );
+                        );
+                    };
+                    
+                    return <ValentinePlaylist />;
                 }
-            };
 
             if (stage === 'proposal') {
                 return (
