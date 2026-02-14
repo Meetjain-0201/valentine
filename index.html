@@ -593,7 +593,12 @@
                             'photo7.jpeg',
                             'photo8.jpeg',
                             'photo9.jpeg',
-                            'photo10.jpeg'
+                            'photo10.jpeg',
+                            'photo16.jpeg',
+                            'photo17.jpeg',
+                            'photo18.jpeg',
+                            'photo19.jpeg',
+                            'photo20.jpeg'
                         ];
                         
                         React.useEffect(() => {
@@ -623,7 +628,7 @@
                                 
                                 const photoInterval = setInterval(() => {
                                     setCurrentImageIndex(prev => {
-                                        if (prev >= 5) return 1;
+                                        if (prev >= 10) return 1;
                                         return prev + 1;
                                     });
                                 }, 10000);
@@ -684,7 +689,9 @@
                                         ))}
                                         
                                         <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
-                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex + 5}`}
+                                            {currentImageIndex === 0 ? 'Cover' : 
+                                             currentImageIndex <= 5 ? `Photo ${currentImageIndex + 5}` : 
+                                             `Photo ${currentImageIndex + 10}`}
                                         </div>
                                     </div>
                                     
