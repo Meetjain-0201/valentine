@@ -227,7 +227,7 @@
                             
                             <div className="max-w-lg mx-auto space-y-4 px-4">
                                 <p className="text-xl text-gray-800 leading-relaxed">
-                                    A फूल for my fool
+                                    They say a rose speaks when words fail. So here's one for you.
                                 </p>
                             </div>
                         </div>
@@ -259,10 +259,11 @@
                             <div className="max-w-2xl mx-auto mt-8 px-4">
                                 <div className="bg-white rounded-xl p-6 shadow-lg">
                                     <p className="text-gray-800 text-lg leading-relaxed mb-4">
-                                        February 7th, 2026 - the day we said the 'L' world 😉💕
+                                        February 6th, 2026 - the day I asked you to be mine, and you said YES! 💕
                                     </p>
                                     <p className="text-gray-600">
-                                        Dekh paper pe chhap gaya matlab official hai 📰😬
+                                        Every day with you feels like breaking news. You're the headline of my life story, 
+                                        and I'm so grateful you're choosing to write it with me. 📰❤️
                                     </p>
                                 </div>
                             </div>
@@ -569,7 +570,7 @@
                                             
                                             <p>I promise to capture every memory with you - not just in photographs, but in the way I remember your smile, the sound of your laugh, the feeling of your hand in mine.</p>
                                             
-                                            <p>I promise that if our time comes to an end, I won't regret a single moment. Because loving you right now is the best thing I've ever done.</p>
+                                            <p>I promise that when our time comes to an end, I won't regret a single moment. Because loving you right now is the best thing I've ever done.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -588,17 +589,12 @@
                         
                         // Images for Hug Day
                         const images = [
-                            'hug-cover.png',
+                            'hug-cover.jpg',
                             'photo6.jpeg',
                             'photo7.jpeg',
                             'photo8.jpeg',
                             'photo9.jpeg',
-                            'photo10.jpeg',
-                            'photo16.jpeg',
-                            'photo17.jpeg',
-                            'photo18.jpeg',
-                            'photo19.jpeg',
-                            'photo20.jpeg'
+                            'photo10.jpeg'
                         ];
                         
                         React.useEffect(() => {
@@ -628,7 +624,7 @@
                                 
                                 const photoInterval = setInterval(() => {
                                     setCurrentImageIndex(prev => {
-                                        if (prev >= 10) return 1;
+                                        if (prev >= 5) return 1;
                                         return prev + 1;
                                     });
                                 }, 10000);
@@ -689,9 +685,7 @@
                                         ))}
                                         
                                         <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
-                                            {currentImageIndex === 0 ? 'Cover' : 
-                                             currentImageIndex <= 5 ? `Photo ${currentImageIndex + 5}` : 
-                                             `Photo ${currentImageIndex + 10}`}
+                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex + 5}`}
                                         </div>
                                     </div>
                                     
@@ -938,53 +932,39 @@
                                 </div>
                             </div>
                             
-                            {/* First Static Message */}
-                            <div className="max-w-2xl mx-auto mb-8 px-4">
-                                <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
-                                    <p className="text-gray-800 font-medium">
-                                        "Hey! You scared of the dark? Me too! Wanna be Thunder Buddies? 
-                                        When you hear the sound of thunder, don't you get too scared. 
-                                        Just grab your Thunder Buddy and say these magic words..." 🌩️
-                                    </p>
-                                </div>
-                            </div>
-                            
                             {/* Animated Ted Bear Section */}
                             <div className="relative min-h-[300px] mb-8">
-                                {/* Speech bubble that appears above Ted's head */}
-                                <div className="ted-speech absolute bg-pink-100 rounded-2xl p-3 shadow-lg max-w-xs z-20 border-2 border-pink-300">
-                                    <p className="text-gray-800 font-semibold text-sm text-center">
-                                        *winks at you* 😏
-                                    </p>
-                                    <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-                                        <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-pink-300"></div>
-                                    </div>
-                                </div>
-                                
                                 {/* Ted moving around */}
                                 <div className="ted-bear absolute text-9xl transition-all duration-1000 ease-in-out">
                                     🧸
                                 </div>
                             </div>
                             
-                            {/* Final Thunder Buddies Message */}
+                            {/* Instructions Message */}
                             <div className="max-w-2xl mx-auto mt-12 px-4">
                                 <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl shadow-lg">
-                                    <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-                                        ⚡ Thunder Buddies For Life! ⚡
+                                    <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                                        📋 INSTRUCTIONS FOR USE
                                     </h3>
-                                    <p className="text-gray-700 text-lg mb-3 text-center">
-                                        "You're my best friend, Aheen. And no matter how much life tries to pull us apart, 
-                                        we're always gonna be Thunder Buddies."
-                                    </p>
-                                    <p className="text-gray-600 text-base mb-4 italic text-center">
-                                        - Ted
-                                    </p>
-                                    <div className="border-t-2 border-pink-300 pt-4">
-                                        <p className="text-gray-700 text-center">
-                                            So yeah, you got yourself a real teddy bear from your man. 
-                                            I'm just here to remind you that whether it's thunder, scary movies, 
-                                            or spiders in the bathroom... you two got each other. 🧸💕
+                                    
+                                    <div className="text-left space-y-4 mb-6">
+                                        <p className="text-gray-700">
+                                            <strong>This teddy bear is to be deployed in the following scenarios:</strong>
+                                        </p>
+                                        <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                                            <li>Horror movie nights (since you insist on traumatizing yourself)</li>
+                                            <li>Thunder/weird noises in the night</li>
+                                            <li>When you miss me but I'm stuck at work/school</li>
+                                            <li>General hugging emergencies</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className="border-t-2 border-pink-300 pt-4 space-y-3">
+                                        <p className="text-gray-700">
+                                            <strong>⚠️ WARNING:</strong> Side effects may include comfort, reduced anxiety, and looking adorable while cuddling.
+                                        </p>
+                                        <p className="text-gray-600 italic">
+                                            <strong>📝 NOTE:</strong> Not a replacement for the real thing, but he'll do in a pinch. 🧸💕
                                         </p>
                                     </div>
                                 </div>
