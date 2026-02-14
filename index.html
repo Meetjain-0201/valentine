@@ -227,7 +227,7 @@
                             
                             <div className="max-w-lg mx-auto space-y-4 px-4">
                                 <p className="text-xl text-gray-800 leading-relaxed">
-                                    They say a rose speaks when words fail. So here's one for you.
+                                    A फूल for my fool
                                 </p>
                             </div>
                         </div>
@@ -259,11 +259,10 @@
                             <div className="max-w-2xl mx-auto mt-8 px-4">
                                 <div className="bg-white rounded-xl p-6 shadow-lg">
                                     <p className="text-gray-800 text-lg leading-relaxed mb-4">
-                                        February 6th, 2026 - the day I asked you to be mine, and you said YES! 💕
+                                        February 7th, 2026 - the day we said the 'L' world 😉💕
                                     </p>
                                     <p className="text-gray-600">
-                                        Every day with you feels like breaking news. You're the headline of my life story, 
-                                        and I'm so grateful you're choosing to write it with me. 📰❤️
+                                        Dekh paper pe chhap gaya matlab official hai 📰😬
                                     </p>
                                 </div>
                             </div>
@@ -395,15 +394,74 @@
                             </div>
                         </div>
                     );
+                } else if (day.name === 'Teddy Day') {
+                    return (
+                        <div className="text-center space-y-6">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-6">Happy Teddy Day! 🧸</h2>
+                            
+                            {/* Video Section */}
+                            <div className="max-w-3xl mx-auto mb-8">
+                                <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+                                    <video 
+                                        className="w-full"
+                                        autoPlay 
+                                        loop 
+                                        muted
+                                        playsInline
+                                    >
+                                        <source src="ted-clip-1.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                            
+                            {/* Instructions Manual */}
+                            <div className="max-w-2xl mx-auto px-4">
+                                <div className="bg-white rounded-xl p-8 shadow-2xl border-2 border-gray-200">
+                                    <div className="text-center mb-6">
+                                        <div className="text-6xl mb-3">📋</div>
+                                        <h3 className="text-2xl font-bold text-gray-800">INSTRUCTIONS FOR USE</h3>
+                                    </div>
+                                    
+                                    <div className="space-y-4 text-left">
+                                        <div className="bg-pink-50 p-4 rounded-lg">
+                                            <p className="text-gray-800 font-semibold mb-2">This teddy bear is to be deployed in the following scenarios:</p>
+                                            <ul className="space-y-2 text-gray-700">
+                                                <li>🎬 Horror movie nights (since you insist on traumatizing yourself)</li>
+                                                <li>⚡ Thunder/weird noises in the night</li>
+                                                <li>💭 When you miss me but I'm stuck at work/school</li>
+                                                <li>🚨 General hugging emergencies</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+                                            <p className="text-gray-800 font-semibold mb-1">⚠️ WARNING:</p>
+                                            <p className="text-gray-700">Side effects may include comfort, reduced anxiety, and looking adorable while cuddling.</p>
+                                        </div>
+                                        
+                                        <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                                            <p className="text-gray-800 font-semibold mb-1">📝 NOTE:</p>
+                                            <p className="text-gray-700">Not a replacement for the real thing, but he'll do in a pinch.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-6 pt-6 border-t-2 border-gray-200 text-center">
+                                        <p className="text-gray-600 italic">
+                                            Thunder Buddies when I'm not around. 🧸💕
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
                 } else if (day.name === 'Promise Day') {
                     const PromisePlayer = () => {
                         const [isPlaying, setIsPlaying] = React.useState(false);
                         const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(258); // Default 4:18 for Photograph
+                        const [duration, setDuration] = React.useState(258);
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
-                        // Images - cover first, then your photos
                         const images = [
                             'photograph-cover.jpg',
                             'photo1.jpeg',
@@ -429,191 +487,6 @@
                             };
                         }, []);
                         
-                        // Slideshow: Cover for 5s, then photos 1-5 cycling every 10s
-                        React.useEffect(() => {
-                            if (!isPlaying) return;
-                            
-                            setCurrentImageIndex(0); // Start with cover
-                            
-                            // After 5 seconds, move to first photo
-                            const coverTimeout = setTimeout(() => {
-                                setCurrentImageIndex(1);
-                                
-                                // Then cycle photos 1-5 every 10 seconds
-                                const photoInterval = setInterval(() => {
-                                    setCurrentImageIndex(prev => {
-                                        if (prev >= 5) return 1; // After photo5, back to photo1
-                                        return prev + 1;
-                                    });
-                                }, 10000);
-                                
-                                return () => clearInterval(photoInterval);
-                            }, 5000);
-                            
-                            return () => clearTimeout(coverTimeout);
-                        }, [isPlaying]);
-                        
-                        const togglePlay = () => {
-                            const audio = audioRef.current;
-                            if (isPlaying) {
-                                audio?.pause();
-                                setCurrentImageIndex(0);
-                            } else {
-                                audio?.play();
-                            }
-                            setIsPlaying(!isPlaying);
-                        };
-                        
-                        const handleProgressClick = (e) => {
-                            const audio = audioRef.current;
-                            if (!audio) return;
-                            const progressBar = e.currentTarget;
-                            const clickX = e.clientX - progressBar.getBoundingClientRect().left;
-                            const width = progressBar.offsetWidth;
-                            const newTime = (clickX / width) * duration;
-                            audio.currentTime = newTime;
-                        };
-                        
-                        const formatTime = (time) => {
-                            if (isNaN(time) || !isFinite(time)) return '0:00';
-                            const mins = Math.floor(time / 60);
-                            const secs = Math.floor(time % 60);
-                            return `${mins}:${secs.toString().padStart(2, '0')}`;
-                        };
-                        
-                        return (
-                            <div className="max-w-2xl mx-auto">
-                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Promise Day! 🤝</h2>
-                                
-                                {/* Spotify-style Player */}
-                                <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
-                                    {/* Album Art / Photo Slideshow */}
-                                    <div className="relative aspect-square bg-gray-800">
-                                        {images.map((img, index) => (
-                                            <img
-                                                key={index}
-                                                src={img}
-                                                alt={index === 0 ? 'Photograph Cover' : `Our Memory ${index}`}
-                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-                                                style={{
-                                                    opacity: currentImageIndex === index ? 1 : 0,
-                                                    zIndex: currentImageIndex === index ? 10 : 1
-                                                }}
-                                            />
-                                        ))}
-                                        
-                                        {/* Debug indicator - shows which photo is active */}
-                                        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
-                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex}`}
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Song Info */}
-                                    <div className="p-6">
-                                        <h3 className="text-white text-2xl font-bold mb-1">Photograph</h3>
-                                        <p className="text-gray-400 text-lg mb-6">Ed Sheeran</p>
-                                        
-                                        {/* Progress Bar */}
-                                        <div className="mb-4">
-                                            <div 
-                                                className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
-                                                onClick={handleProgressClick}
-                                            >
-                                                <div 
-                                                    className="h-full bg-white rounded-full transition-all group-hover:bg-green-500"
-                                                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
-                                                ></div>
-                                            </div>
-                                            <div className="flex justify-between text-xs text-gray-400 mt-2">
-                                                <span>{formatTime(currentTime)}</span>
-                                                <span>{formatTime(duration)}</span>
-                                            </div>
-                                        </div>
-                                        
-                                        {/* Controls */}
-                                        <div className="flex items-center justify-center gap-6">
-                                            <button 
-                                                onClick={togglePlay}
-                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
-                                            >
-                                                {isPlaying ? (
-                                                    <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                                                    </svg>
-                                                ) : (
-                                                    <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M8 5v14l11-7z"/>
-                                                    </svg>
-                                                )}
-                                            </button>
-                                        </div>
-                                        
-                                        {/* Hidden Audio Element */}
-                                        <audio ref={audioRef} src="photograph.mp3" />
-                                    </div>
-                                </div>
-                                
-                                {/* Message */}
-                                <div className="mt-6 text-center px-4">
-                                    <p className="text-gray-700 text-lg mb-2">
-                                        "We keep this love in a photograph, we made these memories for ourselves."
-                                    </p>
-                                    <p className="text-gray-600 mb-6">
-                                        Every moment with you is worth capturing. 📸💕
-                                    </p>
-                                    
-                                    {/* Promises Section */}
-                                    <div className="max-w-xl mx-auto mt-8 bg-white rounded-xl p-6 shadow-lg text-left">
-                                        <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">I promise to make these moments count.</h4>
-                                        <div className="space-y-3 text-gray-700 leading-relaxed">
-                                            <p>I can't promise you tomorrow, but I promise you today. I promise to love you fully in every moment we have, to laugh with you until our sides hurt, to hold you close when the world feels heavy.</p>
-                                            
-                                            <p>I promise to capture every memory with you - not just in photographs, but in the way I remember your smile, the sound of your laugh, the feeling of your hand in mine.</p>
-                                            
-                                            <p>I promise that when our time comes to an end, I won't regret a single moment. Because loving you right now is the best thing I've ever done.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    };
-                    
-                    return <PromisePlayer />;
-                } else if (day.name === 'Hug Day') {
-                    const HugPlayer = () => {
-                        const [isPlaying, setIsPlaying] = React.useState(false);
-                        const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(240); // Placeholder duration
-                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-                        const audioRef = React.useRef(null);
-                        
-                        // Images for Hug Day
-                        const images = [
-                            'hug-cover.jpg',
-                            'photo6.jpeg',
-                            'photo7.jpeg',
-                            'photo8.jpeg',
-                            'photo9.jpeg',
-                            'photo10.jpeg'
-                        ];
-                        
-                        React.useEffect(() => {
-                            const audio = audioRef.current;
-                            if (!audio) return;
-                            
-                            const updateTime = () => setCurrentTime(audio.currentTime);
-                            const updateDuration = () => setDuration(audio.duration);
-                            
-                            audio.addEventListener('timeupdate', updateTime);
-                            audio.addEventListener('loadedmetadata', updateDuration);
-                            
-                            return () => {
-                                audio.removeEventListener('timeupdate', updateTime);
-                                audio.removeEventListener('loadedmetadata', updateDuration);
-                            };
-                        }, []);
-                        
-                        // Slideshow logic
                         React.useEffect(() => {
                             if (!isPlaying) return;
                             
@@ -665,17 +538,15 @@
                         
                         return (
                             <div className="max-w-2xl mx-auto">
-                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Hug Day! 🤗</h2>
+                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Promise Day! 🤝</h2>
                                 
-                                {/* Spotify-style Player */}
                                 <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
-                                    {/* Album Art / Photo Slideshow */}
                                     <div className="relative aspect-square bg-gray-800">
                                         {images.map((img, index) => (
                                             <img
                                                 key={index}
                                                 src={img}
-                                                alt={index === 0 ? 'Album Cover' : `Our Memory ${index + 5}`}
+                                                alt={index === 0 ? 'Photograph Cover' : `Our Memory ${index}`}
                                                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
                                                 style={{
                                                     opacity: currentImageIndex === index ? 1 : 0,
@@ -685,16 +556,14 @@
                                         ))}
                                         
                                         <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
-                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex + 5}`}
+                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex}`}
                                         </div>
                                     </div>
                                     
-                                    {/* Song Info */}
                                     <div className="p-6">
-                                        <h3 className="text-white text-2xl font-bold mb-1">Pretty Baby</h3>
-                                        <p className="text-gray-400 text-lg mb-6">Alex Sampson</p>
+                                        <h3 className="text-white text-2xl font-bold mb-1">Photograph</h3>
+                                        <p className="text-gray-400 text-lg mb-6">Ed Sheeran</p>
                                         
-                                        {/* Progress Bar */}
                                         <div className="mb-4">
                                             <div 
                                                 className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
@@ -711,7 +580,6 @@
                                             </div>
                                         </div>
                                         
-                                        {/* Controls */}
                                         <div className="flex items-center justify-center gap-6">
                                             <button 
                                                 onClick={togglePlay}
@@ -729,12 +597,188 @@
                                             </button>
                                         </div>
                                         
-                                        {/* Hidden Audio Element */}
+                                        <audio ref={audioRef} src="photograph.mp3" />
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-6 text-center px-4">
+                                    <p className="text-gray-700 text-lg mb-2">
+                                        "We keep this love in a photograph, we made these memories for ourselves."
+                                    </p>
+                                    <p className="text-gray-600 mb-6">
+                                        Every moment with you is worth capturing. 📸💕
+                                    </p>
+                                    
+                                    <div className="max-w-xl mx-auto mt-8 bg-white rounded-xl p-6 shadow-lg text-left">
+                                        <h4 className="text-xl font-bold text-gray-800 mb-4 text-center">I promise to make these moments count.</h4>
+                                        <div className="space-y-3 text-gray-700 leading-relaxed">
+                                            <p>I can't promise you tomorrow, but I promise you today. I promise to love you fully in every moment we have, to laugh with you until our sides hurt, to hold you close when the world feels heavy.</p>
+                                            
+                                            <p>I promise to capture every memory with you - not just in photographs, but in the way I remember your smile, the sound of your laugh, the feeling of your hand in mine.</p>
+                                            
+                                            <p>I promise that if our time comes to an end, I won't regret a single moment. Because loving you right now is the best thing I've ever done.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    };
+                    
+                    return <PromisePlayer />;
+                } else if (day.name === 'Hug Day') {
+                    const HugPlayer = () => {
+                        const [isPlaying, setIsPlaying] = React.useState(false);
+                        const [currentTime, setCurrentTime] = React.useState(0);
+                        const [duration, setDuration] = React.useState(240);
+                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+                        const audioRef = React.useRef(null);
+                        
+                        const images = [
+                            'hug-cover.png',
+                            'photo6.jpeg',
+                            'photo7.jpeg',
+                            'photo8.jpeg',
+                            'photo9.jpeg',
+                            'photo10.jpeg',
+                            'photo16.jpeg',
+                            'photo17.jpeg',
+                            'photo18.jpeg',
+                            'photo19.jpeg',
+                            'photo20.jpeg'
+                        ];
+                        
+                        React.useEffect(() => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            
+                            const updateTime = () => setCurrentTime(audio.currentTime);
+                            const updateDuration = () => setDuration(audio.duration);
+                            
+                            audio.addEventListener('timeupdate', updateTime);
+                            audio.addEventListener('loadedmetadata', updateDuration);
+                            
+                            return () => {
+                                audio.removeEventListener('timeupdate', updateTime);
+                                audio.removeEventListener('loadedmetadata', updateDuration);
+                            };
+                        }, []);
+                        
+                        React.useEffect(() => {
+                            if (!isPlaying) return;
+                            
+                            setCurrentImageIndex(0);
+                            
+                            const coverTimeout = setTimeout(() => {
+                                setCurrentImageIndex(1);
+                                
+                                const photoInterval = setInterval(() => {
+                                    setCurrentImageIndex(prev => {
+                                        if (prev >= 10) return 1;
+                                        return prev + 1;
+                                    });
+                                }, 10000);
+                                
+                                return () => clearInterval(photoInterval);
+                            }, 5000);
+                            
+                            return () => clearTimeout(coverTimeout);
+                        }, [isPlaying]);
+                        
+                        const togglePlay = () => {
+                            const audio = audioRef.current;
+                            if (isPlaying) {
+                                audio?.pause();
+                                setCurrentImageIndex(0);
+                            } else {
+                                audio?.play();
+                            }
+                            setIsPlaying(!isPlaying);
+                        };
+                        
+                        const handleProgressClick = (e) => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            const progressBar = e.currentTarget;
+                            const clickX = e.clientX - progressBar.getBoundingClientRect().left;
+                            const width = progressBar.offsetWidth;
+                            const newTime = (clickX / width) * duration;
+                            audio.currentTime = newTime;
+                        };
+                        
+                        const formatTime = (time) => {
+                            if (isNaN(time) || !isFinite(time)) return '0:00';
+                            const mins = Math.floor(time / 60);
+                            const secs = Math.floor(time % 60);
+                            return `${mins}:${secs.toString().padStart(2, '0')}`;
+                        };
+                        
+                        return (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Hug Day! 🤗</h2>
+                                
+                                <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
+                                    <div className="relative aspect-square bg-gray-800">
+                                        {images.map((img, index) => (
+                                            <img
+                                                key={index}
+                                                src={img}
+                                                alt={index === 0 ? 'Album Cover' : `Our Memory ${index <= 5 ? index + 5 : index + 10}`}
+                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+                                                style={{
+                                                    opacity: currentImageIndex === index ? 1 : 0,
+                                                    zIndex: currentImageIndex === index ? 10 : 1
+                                                }}
+                                            />
+                                        ))}
+                                        
+                                        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
+                                            {currentImageIndex === 0 ? 'Cover' : 
+                                             currentImageIndex <= 5 ? `Photo ${currentImageIndex + 5}` : 
+                                             `Photo ${currentImageIndex + 10}`}
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="p-6">
+                                        <h3 className="text-white text-2xl font-bold mb-1">Pretty Baby</h3>
+                                        <p className="text-gray-400 text-lg mb-6">Alex Sampson</p>
+                                        
+                                        <div className="mb-4">
+                                            <div 
+                                                className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
+                                                onClick={handleProgressClick}
+                                            >
+                                                <div 
+                                                    className="h-full bg-white rounded-full transition-all group-hover:bg-green-500"
+                                                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                                                ></div>
+                                            </div>
+                                            <div className="flex justify-between text-xs text-gray-400 mt-2">
+                                                <span>{formatTime(currentTime)}</span>
+                                                <span>{formatTime(duration)}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-center gap-6">
+                                            <button 
+                                                onClick={togglePlay}
+                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
+                                            >
+                                                {isPlaying ? (
+                                                    <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                                    </svg>
+                                                ) : (
+                                                    <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M8 5v14l11-7z"/>
+                                                    </svg>
+                                                )}
+                                            </button>
+                                        </div>
+                                        
                                         <audio ref={audioRef} src="hug-day-song.mp3" />
                                     </div>
                                 </div>
                                 
-                                {/* Song Quote */}
                                 <div className="mt-6 text-center px-4">
                                     <p className="text-gray-700 text-lg italic">
                                         "We'll look up at the stars, holding you in my arms, pretty baby."
@@ -749,11 +793,10 @@
                     const KissPlayer = () => {
                         const [isPlaying, setIsPlaying] = React.useState(false);
                         const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(189); // Kiss You duration ~3:09
+                        const [duration, setDuration] = React.useState(189);
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
-                        // Images for Kiss Day
                         const images = [
                             'kiss-cover.jpg',
                             'photo11.jpeg',
@@ -779,7 +822,6 @@
                             };
                         }, []);
                         
-                        // Slideshow logic
                         React.useEffect(() => {
                             if (!isPlaying) return;
                             
@@ -833,9 +875,7 @@
                             <div className="max-w-2xl mx-auto">
                                 <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Kiss Day! 💋</h2>
                                 
-                                {/* Spotify-style Player */}
                                 <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
-                                    {/* Album Art / Photo Slideshow */}
                                     <div className="relative aspect-square bg-gray-800">
                                         {images.map((img, index) => (
                                             <img
@@ -855,12 +895,10 @@
                                         </div>
                                     </div>
                                     
-                                    {/* Song Info */}
                                     <div className="p-6">
                                         <h3 className="text-white text-2xl font-bold mb-1">Kiss You</h3>
                                         <p className="text-gray-400 text-lg mb-6">One Direction</p>
                                         
-                                        {/* Progress Bar */}
                                         <div className="mb-4">
                                             <div 
                                                 className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
@@ -877,7 +915,6 @@
                                             </div>
                                         </div>
                                         
-                                        {/* Controls */}
                                         <div className="flex items-center justify-center gap-6">
                                             <button 
                                                 onClick={togglePlay}
@@ -895,12 +932,167 @@
                                             </button>
                                         </div>
                                         
-                                        {/* Hidden Audio Element */}
+                                        <audio ref={audioRef} src="hug-day-song.mp3" />
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-6 text-center px-4">
+                                    <p className="text-gray-700 text-lg italic">
+                                        "We'll look up at the stars, holding you in my arms, pretty baby."
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    };
+                    
+                    return <HugPlayer />;
+                } else if (day.name === 'Kiss Day') {
+                    const KissPlayer = () => {
+                        const [isPlaying, setIsPlaying] = React.useState(false);
+                        const [currentTime, setCurrentTime] = React.useState(0);
+                        const [duration, setDuration] = React.useState(189);
+                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+                        const audioRef = React.useRef(null);
+                        
+                        const images = [
+                            'kiss-cover.jpg',
+                            'photo11.jpeg',
+                            'photo12.jpeg',
+                            'photo13.jpeg',
+                            'photo14.jpeg',
+                            'photo15.jpeg'
+                        ];
+                        
+                        React.useEffect(() => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            
+                            const updateTime = () => setCurrentTime(audio.currentTime);
+                            const updateDuration = () => setDuration(audio.duration);
+                            
+                            audio.addEventListener('timeupdate', updateTime);
+                            audio.addEventListener('loadedmetadata', updateDuration);
+                            
+                            return () => {
+                                audio.removeEventListener('timeupdate', updateTime);
+                                audio.removeEventListener('loadedmetadata', updateDuration);
+                            };
+                        }, []);
+                        
+                        React.useEffect(() => {
+                            if (!isPlaying) return;
+                            
+                            setCurrentImageIndex(0);
+                            
+                            const coverTimeout = setTimeout(() => {
+                                setCurrentImageIndex(1);
+                                
+                                const photoInterval = setInterval(() => {
+                                    setCurrentImageIndex(prev => {
+                                        if (prev >= 5) return 1;
+                                        return prev + 1;
+                                    });
+                                }, 10000);
+                                
+                                return () => clearInterval(photoInterval);
+                            }, 5000);
+                            
+                            return () => clearTimeout(coverTimeout);
+                        }, [isPlaying]);
+                        
+                        const togglePlay = () => {
+                            const audio = audioRef.current;
+                            if (isPlaying) {
+                                audio?.pause();
+                                setCurrentImageIndex(0);
+                            } else {
+                                audio?.play();
+                            }
+                            setIsPlaying(!isPlaying);
+                        };
+                        
+                        const handleProgressClick = (e) => {
+                            const audio = audioRef.current;
+                            if (!audio) return;
+                            const progressBar = e.currentTarget;
+                            const clickX = e.clientX - progressBar.getBoundingClientRect().left;
+                            const width = progressBar.offsetWidth;
+                            const newTime = (clickX / width) * duration;
+                            audio.currentTime = newTime;
+                        };
+                        
+                        const formatTime = (time) => {
+                            if (isNaN(time) || !isFinite(time)) return '0:00';
+                            const mins = Math.floor(time / 60);
+                            const secs = Math.floor(time % 60);
+                            return `${mins}:${secs.toString().padStart(2, '0')}`;
+                        };
+                        
+                        return (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Kiss Day! 💋</h2>
+                                
+                                <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
+                                    <div className="relative aspect-square bg-gray-800">
+                                        {images.map((img, index) => (
+                                            <img
+                                                key={index}
+                                                src={img}
+                                                alt={index === 0 ? 'Kiss You Cover' : `Our Memory ${index + 10}`}
+                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+                                                style={{
+                                                    opacity: currentImageIndex === index ? 1 : 0,
+                                                    zIndex: currentImageIndex === index ? 10 : 1
+                                                }}
+                                            />
+                                        ))}
+                                        
+                                        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
+                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex + 10}`}
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="p-6">
+                                        <h3 className="text-white text-2xl font-bold mb-1">Kiss You</h3>
+                                        <p className="text-gray-400 text-lg mb-6">One Direction</p>
+                                        
+                                        <div className="mb-4">
+                                            <div 
+                                                className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
+                                                onClick={handleProgressClick}
+                                            >
+                                                <div 
+                                                    className="h-full bg-white rounded-full transition-all group-hover:bg-green-500"
+                                                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                                                ></div>
+                                            </div>
+                                            <div className="flex justify-between text-xs text-gray-400 mt-2">
+                                                <span>{formatTime(currentTime)}</span>
+                                                <span>{formatTime(duration)}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-center gap-6">
+                                            <button 
+                                                onClick={togglePlay}
+                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
+                                            >
+                                                {isPlaying ? (
+                                                    <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                                                    </svg>
+                                                ) : (
+                                                    <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M8 5v14l11-7z"/>
+                                                    </svg>
+                                                )}
+                                            </button>
+                                        </div>
+                                        
                                         <audio ref={audioRef} src="kiss-you.mp3" />
                                     </div>
                                 </div>
                                 
-                                {/* Song Quote */}
                                 <div className="mt-6 text-center px-4">
                                     <p className="text-gray-700 text-lg italic">
                                         "Oh, I just wanna take you anywhere that you like. We can go out any day, any night. Baby, I'll take you there, take you there."
@@ -911,127 +1103,6 @@
                     };
                     
                     return <KissPlayer />;
-                } else if (day.name === 'Teddy Day') {
-                    return (
-                        <div className="relative overflow-hidden pb-20">
-                            <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Teddy Day! 🧸</h2>
-                            
-                            {/* Video Section */}
-                            <div className="max-w-3xl mx-auto mb-8">
-                                <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-                                    <video 
-                                        className="w-full"
-                                        autoPlay 
-                                        loop 
-                                        muted
-                                        playsInline
-                                    >
-                                        <source src="ted-clip-1.mp4" type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                            </div>
-                            
-                            {/* Animated Ted Bear Section */}
-                            <div className="relative min-h-[300px] mb-8">
-                                {/* Ted moving around */}
-                                <div className="ted-bear absolute text-9xl transition-all duration-1000 ease-in-out">
-                                    🧸
-                                </div>
-                            </div>
-                            
-                            {/* Instructions Message */}
-                            <div className="max-w-2xl mx-auto mt-12 px-4">
-                                <div className="bg-gradient-to-r from-pink-100 to-red-100 p-6 rounded-xl shadow-lg">
-                                    <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-                                        📋 INSTRUCTIONS FOR USE
-                                    </h3>
-                                    
-                                    <div className="text-left space-y-4 mb-6">
-                                        <p className="text-gray-700">
-                                            <strong>This teddy bear is to be deployed in the following scenarios:</strong>
-                                        </p>
-                                        <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
-                                            <li>Horror movie nights (since you insist on traumatizing yourself)</li>
-                                            <li>Thunder/weird noises in the night</li>
-                                            <li>When you miss me but I'm stuck at work/school</li>
-                                            <li>General hugging emergencies</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div className="border-t-2 border-pink-300 pt-4 space-y-3">
-                                        <p className="text-gray-700">
-                                            <strong>⚠️ WARNING:</strong> Side effects may include comfort, reduced anxiety, and looking adorable while cuddling.
-                                        </p>
-                                        <p className="text-gray-600 italic">
-                                            <strong>📝 NOTE:</strong> Not a replacement for the real thing, but he'll do in a pinch. 🧸💕
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Styles for Ted animations */}
-                            <style>{`
-                                .ted-bear {
-                                    animation: tedMove 15s ease-in-out infinite;
-                                    bottom: 100px;
-                                }
-                                
-                                .ted-speech {
-                                    animation: speechAppear 15s ease-in-out infinite;
-                                    bottom: 250px;
-                                    left: 50%;
-                                    transform: translateX(-50%);
-                                }
-                                
-                                @keyframes tedMove {
-                                    0% { 
-                                        left: 10%; 
-                                        transform: rotate(-5deg) scale(1);
-                                    }
-                                    15% { 
-                                        left: 45%; 
-                                        transform: rotate(0deg) scale(1.05);
-                                    }
-                                    /* Stop and show message */
-                                    30%, 55% { 
-                                        left: 45%; 
-                                        transform: rotate(0deg) scale(1);
-                                    }
-                                    /* Resume moving */
-                                    70% { 
-                                        left: 75%; 
-                                        transform: rotate(5deg) scale(1.1);
-                                    }
-                                    85% { 
-                                        left: 25%; 
-                                        transform: rotate(-3deg) scale(0.95);
-                                    }
-                                    100% { 
-                                        left: 10%; 
-                                        transform: rotate(-5deg) scale(1);
-                                    }
-                                }
-                                
-                                @keyframes speechAppear {
-                                    0%, 25% { 
-                                        opacity: 0; 
-                                        transform: translateX(-50%) translateY(-20px) scale(0.8);
-                                    }
-                                    /* Appear when Ted stops at center */
-                                    30%, 55% { 
-                                        opacity: 1;
-                                        transform: translateX(-50%) translateY(0) scale(1);
-                                    }
-                                    /* Disappear when Ted moves again */
-                                    60%, 100% { 
-                                        opacity: 0;
-                                        transform: translateX(-50%) translateY(-20px) scale(0.8);
-                                    }
-                                }
-                            `}</style>
-                        </div>
-                    );
                 } else if (day.name === "Valentine's Day") {
                     return (
                         <div className="text-center space-y-4">
