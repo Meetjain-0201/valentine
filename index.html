@@ -793,10 +793,11 @@
                     const KissPlayer = () => {
                         const [isPlaying, setIsPlaying] = React.useState(false);
                         const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(189);
+                        const [duration, setDuration] = React.useState(189); // Kiss You duration ~3:09
                         const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
                         const audioRef = React.useRef(null);
                         
+                        // Images for Kiss Day
                         const images = [
                             'kiss-cover.jpg',
                             'photo11.jpeg',
@@ -822,6 +823,7 @@
                             };
                         }, []);
                         
+                        // Slideshow logic
                         React.useEffect(() => {
                             if (!isPlaying) return;
                             
@@ -875,7 +877,9 @@
                             <div className="max-w-2xl mx-auto">
                                 <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Kiss Day! 💋</h2>
                                 
+                                {/* Spotify-style Player */}
                                 <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
+                                    {/* Album Art / Photo Slideshow */}
                                     <div className="relative aspect-square bg-gray-800">
                                         {images.map((img, index) => (
                                             <img
@@ -895,10 +899,12 @@
                                         </div>
                                     </div>
                                     
+                                    {/* Song Info */}
                                     <div className="p-6">
                                         <h3 className="text-white text-2xl font-bold mb-1">Kiss You</h3>
                                         <p className="text-gray-400 text-lg mb-6">One Direction</p>
                                         
+                                        {/* Progress Bar */}
                                         <div className="mb-4">
                                             <div 
                                                 className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
@@ -915,6 +921,7 @@
                                             </div>
                                         </div>
                                         
+                                        {/* Controls */}
                                         <div className="flex items-center justify-center gap-6">
                                             <button 
                                                 onClick={togglePlay}
@@ -932,167 +939,12 @@
                                             </button>
                                         </div>
                                         
-                                        <audio ref={audioRef} src="hug-day-song.mp3" />
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-6 text-center px-4">
-                                    <p className="text-gray-700 text-lg italic">
-                                        "We'll look up at the stars, holding you in my arms, pretty baby."
-                                    </p>
-                                </div>
-                            </div>
-                        );
-                    };
-                    
-                    return <HugPlayer />;
-                } else if (day.name === 'Kiss Day') {
-                    const KissPlayer = () => {
-                        const [isPlaying, setIsPlaying] = React.useState(false);
-                        const [currentTime, setCurrentTime] = React.useState(0);
-                        const [duration, setDuration] = React.useState(189);
-                        const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-                        const audioRef = React.useRef(null);
-                        
-                        const images = [
-                            'kiss-cover.jpg',
-                            'photo11.jpeg',
-                            'photo12.jpeg',
-                            'photo13.jpeg',
-                            'photo14.jpeg',
-                            'photo15.jpeg'
-                        ];
-                        
-                        React.useEffect(() => {
-                            const audio = audioRef.current;
-                            if (!audio) return;
-                            
-                            const updateTime = () => setCurrentTime(audio.currentTime);
-                            const updateDuration = () => setDuration(audio.duration);
-                            
-                            audio.addEventListener('timeupdate', updateTime);
-                            audio.addEventListener('loadedmetadata', updateDuration);
-                            
-                            return () => {
-                                audio.removeEventListener('timeupdate', updateTime);
-                                audio.removeEventListener('loadedmetadata', updateDuration);
-                            };
-                        }, []);
-                        
-                        React.useEffect(() => {
-                            if (!isPlaying) return;
-                            
-                            setCurrentImageIndex(0);
-                            
-                            const coverTimeout = setTimeout(() => {
-                                setCurrentImageIndex(1);
-                                
-                                const photoInterval = setInterval(() => {
-                                    setCurrentImageIndex(prev => {
-                                        if (prev >= 5) return 1;
-                                        return prev + 1;
-                                    });
-                                }, 10000);
-                                
-                                return () => clearInterval(photoInterval);
-                            }, 5000);
-                            
-                            return () => clearTimeout(coverTimeout);
-                        }, [isPlaying]);
-                        
-                        const togglePlay = () => {
-                            const audio = audioRef.current;
-                            if (isPlaying) {
-                                audio?.pause();
-                                setCurrentImageIndex(0);
-                            } else {
-                                audio?.play();
-                            }
-                            setIsPlaying(!isPlaying);
-                        };
-                        
-                        const handleProgressClick = (e) => {
-                            const audio = audioRef.current;
-                            if (!audio) return;
-                            const progressBar = e.currentTarget;
-                            const clickX = e.clientX - progressBar.getBoundingClientRect().left;
-                            const width = progressBar.offsetWidth;
-                            const newTime = (clickX / width) * duration;
-                            audio.currentTime = newTime;
-                        };
-                        
-                        const formatTime = (time) => {
-                            if (isNaN(time) || !isFinite(time)) return '0:00';
-                            const mins = Math.floor(time / 60);
-                            const secs = Math.floor(time % 60);
-                            return `${mins}:${secs.toString().padStart(2, '0')}`;
-                        };
-                        
-                        return (
-                            <div className="max-w-2xl mx-auto">
-                                <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Happy Kiss Day! 💋</h2>
-                                
-                                <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl overflow-hidden">
-                                    <div className="relative aspect-square bg-gray-800">
-                                        {images.map((img, index) => (
-                                            <img
-                                                key={index}
-                                                src={img}
-                                                alt={index === 0 ? 'Kiss You Cover' : `Our Memory ${index + 10}`}
-                                                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
-                                                style={{
-                                                    opacity: currentImageIndex === index ? 1 : 0,
-                                                    zIndex: currentImageIndex === index ? 10 : 1
-                                                }}
-                                            />
-                                        ))}
-                                        
-                                        <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-20">
-                                            {currentImageIndex === 0 ? 'Cover' : `Photo ${currentImageIndex + 10}`}
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="p-6">
-                                        <h3 className="text-white text-2xl font-bold mb-1">Kiss You</h3>
-                                        <p className="text-gray-400 text-lg mb-6">One Direction</p>
-                                        
-                                        <div className="mb-4">
-                                            <div 
-                                                className="w-full h-1 bg-gray-700 rounded-full cursor-pointer group"
-                                                onClick={handleProgressClick}
-                                            >
-                                                <div 
-                                                    className="h-full bg-white rounded-full transition-all group-hover:bg-green-500"
-                                                    style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
-                                                ></div>
-                                            </div>
-                                            <div className="flex justify-between text-xs text-gray-400 mt-2">
-                                                <span>{formatTime(currentTime)}</span>
-                                                <span>{formatTime(duration)}</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="flex items-center justify-center gap-6">
-                                            <button 
-                                                onClick={togglePlay}
-                                                className="w-16 h-16 bg-white rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg"
-                                            >
-                                                {isPlaying ? (
-                                                    <svg className="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                                                    </svg>
-                                                ) : (
-                                                    <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M8 5v14l11-7z"/>
-                                                    </svg>
-                                                )}
-                                            </button>
-                                        </div>
-                                        
+                                        {/* Hidden Audio Element */}
                                         <audio ref={audioRef} src="kiss-you.mp3" />
                                     </div>
                                 </div>
                                 
+                                {/* Song Quote */}
                                 <div className="mt-6 text-center px-4">
                                     <p className="text-gray-700 text-lg italic">
                                         "Oh, I just wanna take you anywhere that you like. We can go out any day, any night. Baby, I'll take you there, take you there."
