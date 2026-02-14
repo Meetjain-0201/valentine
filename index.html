@@ -1287,7 +1287,18 @@
                     };
                     
                     return <ValentinePlaylist />;
+                } else {
+                    return (
+                        <div className="text-center space-y-4">
+                            <h2 className="text-3xl font-bold text-pink-600 mb-4">Happy {day.name}! {day.emoji}</h2>
+                            <div className="text-9xl">{day.emoji}</div>
+                            <p className="text-gray-600 mt-4">
+                                This day's special message will be revealed soon... 💝
+                            </p>
+                        </div>
+                    );
                 }
+            };
 
             if (stage === 'proposal') {
                 return (
